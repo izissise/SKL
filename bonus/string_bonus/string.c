@@ -5,7 +5,7 @@
 ** Login   <debas_e@epitech.net>
 ** 
 ** Started on  Sat Jan 11 19:08:38 2014 Etienne
-** Last update Sat Jan 11 22:17:12 2014 jonathan.collinet
+** Last update Sun Jan 12 00:04:13 2014 Etienne
 */
 
 
@@ -66,27 +66,34 @@ static Object *String_append_s(const Object* self, const Object *other)
 {
   StringClass *a;
   StringClass *b;
-  char const	*tmp;
+  char		*new_str = NULL;
+  Object	*ret = NULL;
+  int		len;
 
   a = (StringClass *)self;
   b = (StringClass *)other;
-  tmp = a->s;
+  len = 0;
   if ((a != NULL && !strcmp(a->base.__name__, "String")) && (b != NULL && !strcmp(b->base.__name__, "String")))
     {
       if (b->s)
 	{
 	  len = strlen(b->s);
-	  if (a->s)
+	  printf("%p\n", self);
+	  printf("%p\n", other);
+	  write(1, "toto\n", 5);
+	  if (a->s) {
 	    len += strlen(a->s);
-	  a->s = realloc(a->s, (sizeof(char) * len));
-	  memset(a->s + strlen(a->s), 0, len * sizeof(char));
-	  if (a->s != tmp)
-	    delete(String, a);
-	  strcat(a->s, b->s);
-	  return(new(String, a->s));
+	    new_str = strdup(a->s);
+	    new_str = realloc(new_str, (sizeof(char) * len) + 1);
+	    strcat(new_str, b->s);
+	    ret = new(String, new_str);
+	    //	    free(new_str);
+	    return(ret);	    
+	  }
+	  return (new(String, b->s));
 	}
     }
-  return (self);
+  return (NULL);
 }
 
 static Object *String_append_c(const Object* self, const char* other)
@@ -97,7 +104,7 @@ static Object *String_append_c(const Object* self, const char* other)
 }
 
 static StringClass _description = {
-  { sizeof(StringClass), "String", &String_ctor, &String_dtor, &String_str, &String_c_str, &String_append_s, &String_append_c },
+  { sizeof(StringClass), "String", &String_ctor, &String_dtor, &String_str, &String_c_str, &String_append_c, &String_append_s },
   NULL, NULL
 };
 

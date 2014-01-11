@@ -12,7 +12,7 @@ int main()
   
   printf("%s\n", str(p1));
   printf("%s\n", getstr(p1));
-  printf("%s\n", apstrc(p1, p2));
+  printf("%s\n", getstr(appstr_s(p1, p2)));
   
   delete(p1);
   
