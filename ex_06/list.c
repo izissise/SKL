@@ -127,7 +127,7 @@ void list_del_elem_at_back(t_list **front_ptr)
   list_del_elem_at_position(front_ptr, list_get_size(*front_ptr) - 1);
 }
 
-void* list_get_elem_at_position(t_list* list, unsigned int position)
+t_list* list_get_elem_at_position(t_list* list, unsigned int position)
 {
   t_list* tmp = list;
   if (tmp == NULL)
@@ -140,15 +140,15 @@ void* list_get_elem_at_position(t_list* list, unsigned int position)
     }
   if (tmp == NULL)
     return 0;
-  return tmp->_obj;
+  return tmp;
 }
 
-void* list_get_elem_at_front(t_list* list)
+t_list* list_get_elem_at_front(t_list* list)
 {
   return list_get_elem_at_position(list, 0);
 }
 
-void* list_get_elem_at_back(t_list* list)
+t_list* list_get_elem_at_back(t_list* list)
 {
   return list_get_elem_at_position(list, list_get_size(list) - 1);
 }
@@ -312,7 +312,7 @@ Object* List_getitem(ListClass* self, ...)
   int lsize = list_get_size(self->phead);
   if (id > lsize)
     return (NULL);
-  return (list_get_elem_at_position(self->phead, id));
+  return (list_get_elem_at_position(self->phead, id)->_obj);
 }
 
 
