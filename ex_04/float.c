@@ -9,6 +9,7 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "float.h"
 #include "int.h"
 #include "char.h"
@@ -18,46 +19,46 @@ typedef struct
   Class base;
   float x;
   char *str;
-} Float;
+} FloatClass;
 
 static void	Float_ctor(Object* self, va_list *ap)
 {
-  Float *this = (Float*)self;
+  FloatClass* this = (FloatClass*)self;
   this->x = (float)(va_arg(*ap, float));
 }
 
 static void	Float_dtor(Object* self)
 {
-  Float *a;
+  FloatClass *a;
 
-  a = (Float *)self;
+  a = (FloatClass*)self;
   free(a->str);
 }
 
 static char const *Float_str(Object* self)
 {
-  Float *a;
+  FloatClass *a;
 
-  a = (Float *)self;
+  a = (FloatClass*)self;
   if (a->str != NULL)
     free(a->str);
   a->str = malloc(200);
-  snprintf(a->str, 200, "<%s (%f)>", a->base->__name__, a->x);
+  snprintf(a->str, 200, "<%s (%f)>", (a->base).__name__, a->x);
   return(a->str);
 }
 
 static Object* Float_add(const Object* self, const Object* other)
 {
-  Class	*this;
-  Float	*res;
+  FloatClass	*this;
+  FloatClass	*res;
 
-  this = (Float*)self;
+  this = (FloatClass*)self;
   if (other != NULL)
     {
       Class* type = (Class*)other;
       if (!strcmp(type->__name__, "Float"))
         {
-          Float	*second = (Float*)other;
+          FloatClass	*second = (FloatClass*)other;
           res = new(Float, this->x + second->x);
         }
       if (!strcmp(type->__name__, "Int"))
@@ -76,16 +77,16 @@ static Object* Float_add(const Object* self, const Object* other)
 
 static Object* Float_sub(const Object* self, const Object* other)
 {
-  Class	*this;
-  Float	*res;
+  FloatClass	*this;
+  FloatClass	*res;
 
-  this = (Float*)self;
+  this = (FloatClass*)self;
   if (other != NULL)
     {
       Class* type = (Class*)other;
       if (!strcmp(type->__name__, "Float"))
         {
-          Float	*second = (Float*)other;
+          FloatClass	*second = (FloatClass*)other;
           res = new(Float, this->x - second->x);
         }
       if (!strcmp(type->__name__, "Int"))
@@ -104,16 +105,16 @@ static Object* Float_sub(const Object* self, const Object* other)
 
 static Object* Float_mul(const Object* self, const Object* other)
 {
-  Class	*this;
-  Float	*res;
+  FloatClass	*this;
+  FloatClass	*res;
 
-  this = (Float*)self;
+  this = (FloatClass*)self;
   if (other != NULL)
     {
       Class* type = (Class*)other;
       if (!strcmp(type->__name__, "Float"))
         {
-          Float	*second = (Float*)other;
+          FloatClass	*second = (FloatClass*)other;
           res = new(Float, this->x * second->x);
         }
       if (!strcmp(type->__name__, "Int"))
@@ -132,16 +133,16 @@ static Object* Float_mul(const Object* self, const Object* other)
 
 static Object* Float_div(const Object* self, const Object* other)
 {
-  Class	*this;
-  Float	*res;
+  FloatClass	*this;
+  FloatClass	*res;
 
-  this = (Float*)self;
+  this = (FloatClass*)self;
   if (other != NULL)
     {
       Class* type = (Class*)other;
       if (!strcmp(type->__name__, "Float"))
         {
-          Float	*second = (Float*)other;
+          FloatClass	*second = (FloatClass*)other;
           if (second->x == 0)
             res = new(Float, 0.0);
           else
@@ -169,16 +170,16 @@ static Object* Float_div(const Object* self, const Object* other)
 
 static bool Float_eq(const Object* self, const Object* other)
 {
-  Class	*this;
-  Float	*res;
+  FloatClass	*this;
+  FloatClass	*res;
 
-  this = (Float*)self;
+  this = (FloatClass*)self;
   if (other != NULL)
     {
       Class* type = (Class*)other;
       if (!strcmp(type->__name__, "Float"))
         {
-          Float	*second = (Float*)other;
+          FloatClass	*second = (FloatClass*)other;
           return (other->x == this->x);
         }
       if (!strcmp(type->__name__, "Int"))
@@ -197,16 +198,16 @@ static bool Float_eq(const Object* self, const Object* other)
 
 static bool Float_gt(const Object* self, const Object* other)
 {
-  Class	*this;
-  Float	*res;
+  FloatClass	*this;
+  FloatClass	*res;
 
-  this = (Float*)self;
+  this = (FloatClass*)self;
   if (other != NULL)
     {
       Class* type = (Class*)other;
       if (!strcmp(type->__name__, "Float"))
         {
-          Float	*second = (Float*)other;
+          FloatClass	*second = (FloatClass*)other;
           return (this->x > other->x);
         }
       if (!strcmp(type->__name__, "Int"))
@@ -225,16 +226,16 @@ static bool Float_gt(const Object* self, const Object* other)
 
 static bool Float_lt(const Object* self, const Object* other)
 {
-  Class	*this;
-  Float	*res;
+  FloatClass	*this;
+  FloatClass	*res;
 
-  this = (Float*)self;
+  this = (FloatClass*)self;
   if (other != NULL)
     {
       Class* type = (Class*)other;
       if (!strcmp(type->__name__, "Float"))
         {
-          Float	*second = (Float*)other;
+          FloatClass	*second = (FloatClass*)other;
           return (this->x < other->x);
         }
       if (!strcmp(type->__name__, "Int"))
@@ -253,7 +254,7 @@ static bool Float_lt(const Object* self, const Object* other)
 
 static Float _description = {
   { sizeof(Float), "Float", &Float_ctor, &Float_dtor, &Float_str,
-    &Float_add, &Float_sub, &Float_mul, &Float_div, &Float_eq
+    &Float_add, &Float_sub, &Float_mul, &Float_div, &Float_eq, &Float_gt, &Float_lt
   },
   0.0
 };

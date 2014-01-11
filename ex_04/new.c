@@ -14,7 +14,7 @@
 
 #include "object.h"
 #include "raise.h"
-#include "point.h"
+
 
 Object		*va_new(Class *object, va_list *ap)
 {
