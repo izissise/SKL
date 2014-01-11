@@ -8,8 +8,11 @@
 ** Last update Sat Jan 11 09:56:51 2014 Etienne
 */
 
-#include "object.h"
 #include <stdlib.h>
+#include <string.h>
+
+#include "object.h"
+#include "raise.h"
 
 Object		*new(Class *object)
 {
@@ -17,10 +20,10 @@ Object		*new(Class *object)
 
   ret = NULL;
   if ((ret = malloc(object->__size__)) == NULL)
-    raise ("Out of memory");
+    raise("Out of memory");
   memcpy(ret, object, object->__size__);
-  if (ret->base->__init__ != NULL)
-    ret->base->__init__(ret);
+  if (((Class*)ret)->__init__ != NULL)
+    ((Class*)ret)->__init__(ret);
   return (ret);
 }
 
@@ -29,8 +32,9 @@ void		delete(Object* ptr)
 {
   if (ptr != NULL)
     {
-      Class *base = &(ptr->base);
+      Class *base = (Class*)ptr;
       if (base->__del__ != NULL)
-      base->__del__(ptr);
+        base->__del__(ptr);
+      free(ptr);
     }
 }
