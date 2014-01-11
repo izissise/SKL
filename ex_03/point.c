@@ -47,7 +47,7 @@ static char const *Point_str(Object* self)
   if (a->str != NULL)
     free(a->str);
   a->str = malloc(200);
-  snprintf(a->str, 199, "<Point (%d, %d)>", a->x, a->y);
+  snprintf(a->str, 199, "<%s (%d, %d)>", a->str, a->x, a->y);
   return(a->str);
 }
 
