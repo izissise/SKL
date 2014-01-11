@@ -1,9 +1,9 @@
 /*
 ** string.c for string in /home/debas_e/Project/piscine_cpp/Rush/piscine_cpp_rush1/bonus/string_bonus
-** 
+**
 ** Made by Etienne
 ** Login   <debas_e@epitech.net>
-** 
+**
 ** Started on  Sat Jan 11 19:08:38 2014 Etienne
 ** Last update Sun Jan 12 00:04:13 2014 Etienne
 */
@@ -19,7 +19,7 @@
 typedef struct
 {
   Class		base;
-  const char	*s;
+  char	*s;
   char		*str;
 }		StringClass;
 
@@ -28,7 +28,7 @@ static void String_ctor(Object* self, va_list *ap)
   StringClass *a;
 
   a = (StringClass *) self;
-  a->s = va_arg(*ap, char *);
+  a->s = strdup(va_arg(*ap, char *));
   a->str = NULL;
 }
 
@@ -38,7 +38,10 @@ static void String_dtor(Object* self)
 
   a = (StringClass *) self;
   if (a != NULL)
+  {
     free(a->str);
+    free(a->s);
+  }
 }
 
 static char const *String_str(Object* self)
@@ -78,17 +81,14 @@ static Object *String_append_s(const Object* self, const Object *other)
       if (b->s)
 	{
 	  len = strlen(b->s);
-	  printf("%p\n", self);
-	  printf("%p\n", other);
-	  write(1, "toto\n", 5);
 	  if (a->s) {
 	    len += strlen(a->s);
 	    new_str = strdup(a->s);
 	    new_str = realloc(new_str, (sizeof(char) * len) + 1);
 	    strcat(new_str, b->s);
 	    ret = new(String, new_str);
-	    //	    free(new_str);
-	    return(ret);	    
+	    	    free(new_str);
+	    return(ret);
 	  }
 	  return (new(String, b->s));
 	}
