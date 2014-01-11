@@ -46,7 +46,7 @@ static char const *Vertex_str(Object* self)
   if (a->str != NULL)
     free(a->str);
   a->str = malloc(200);
-  snprintf(a->str, 199, "<Vertex (%d, %d, %d)>", a->x, a->y, a->y);
+  snprintf(a->str, 199, "<%s (%d, %d, %d)>", a->str, a->x, a->y, a->y);
   return(a->str);
 }
 
