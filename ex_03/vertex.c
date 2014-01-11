@@ -5,12 +5,13 @@
 ** Login   <lavand_m@epitech.net>
 **
 ** Started on  Sat Jan 11 10:57:39 2014 Maxime
-** Last update Sat Jan 11 11:55:37 2014 Maxime
+** Last update Sat Jan 11 11:59:31 2014 Maxime
 */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include "vertex.h"
+#include "new.h"
 
 typedef struct
 {
@@ -50,9 +51,29 @@ static char const *Vertex_str(Object* self)
   return(a->str);
 }
 
+static Object *Vertex_add(const Object* self, const Object* other)
+{
+  VertexClass *a;
+  VertexClass *b;
+
+  a = (VertexClass *)self;
+  b = (VertexClass *)other;
+  return(new(Vertex, a->x + b->x, a->y + b->y, a->z - b->z));
+}
+
+static Object *Vertex_sub(const Object* self, const Object* other)
+{
+  VertexClass *a;
+  VertexClass *b;
+
+  a = (VertexClass *)self;
+  b = (VertexClass *)other;
+  return(new(Vertex, a->x - b->x, a->y - b->y, a->z - b->z));
+}
+
 static VertexClass _description = {
-  { sizeof(VertexClass), "Vertex", &Vertex_ctor, &Vertex_dtor, &Vertex_str },
-  0, 0, 0, NULL
+    { sizeof(VertexClass), "Vertex", &Vertex_ctor, &Vertex_dtor, &Vertex_str, &Vertex_add, &Vertex_sub },
+    0, 0, 0, NULL
 };
 
 Class* Vertex = (Class*) &_description;
