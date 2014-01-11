@@ -67,7 +67,8 @@ void ArrayIterator_setval(ArrayIteratorClass* self, ...)
     va_list	ap;
 
     va_start(ap, self);
-    Array_setitem(self->_array, self->_idx, va_arg(ap, int));
+    delete(self->_array->_tab[self->_idx]);
+    va_new(self->_array->_tab[self->_idx], &ap);
     va_end(ap);
 }
 
@@ -96,17 +97,17 @@ static Class* ArrayIterator = (Class*) &ArrayIteratorDescr;
 void Array_ctor(ArrayClass* self, va_list* args)
 {
     int i;
-    int tmp;
+    va_list ap;
 
     self->_size = (size_t) va_arg(*args, int);
     self->_type = (Class*) va_arg(*args, void *);
     self->_tab = malloc((self->_size + 1) * sizeof(Object**));
     i = 0;
-    tmp = va_arg(*args, int);
-    while (i < self->_size)
+    while (i < (int)self->_size)
     {
-        self->_tab[i] = new(self->_type, tmp);
-        i++;
+      va_copy(ap, *args);
+      self->_tab[i] = va_new(self->_type, &ap);
+      i++;
     }
     self->_tab[i] = NULL;
 }
@@ -116,10 +117,9 @@ void Array_dtor(ArrayClass* self)
     int i;
 
     i = 0;
-    while (i < self->_size)
+    while (i < (int)self->_size)
     {
         delete(self->_tab[i]);
-	printf ("%d\n",i);
         i++;
     }
     free(self->_tab);
@@ -149,7 +149,7 @@ Object* Array_getitem(ArrayClass* self, ...)
     va_start(ap, self);
     id = va_arg(ap, int);
     va_end(ap);
-    if (id > self->_size)
+    if (id > (int)self->_size)
         return (NULL);
     return (self->_tab[id]);
 }
@@ -158,15 +158,13 @@ Object* Array_getitem(ArrayClass* self, ...)
 void Array_setitem(ArrayClass* self, ...)
 {
     int id;
-    int value;
     va_list	ap;
 
     va_start(ap, self);
     id = va_arg(ap, int);
-    value = va_arg(ap, int);
-    va_end(ap);
     delete(self->_tab[id]);
-    new(self->_tab[id], value);
+    self->_tab[id] = va_new(self->_type, &ap);
+    va_end(ap);
 }
 
 static ArrayClass _descr = {
