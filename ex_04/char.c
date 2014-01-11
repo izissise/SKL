@@ -75,7 +75,7 @@ static Object *Char_add(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Char"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Char"))
     {
       if (strcmp(second->__name__, "Char") == 0)
         {
@@ -84,7 +84,7 @@ static Object *Char_add(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__add__(toCall, other);
         }
@@ -105,7 +105,7 @@ static Object *Char_sub(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Char"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Char"))
     {
       if (strcmp(second->__name__, "Char") == 0)
         {
@@ -114,7 +114,7 @@ static Object *Char_sub(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__sub__(toCall, other);
         }
@@ -135,7 +135,7 @@ static Object *Char_mul(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Char"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Char"))
     {
       if (strcmp(second->__name__, "Char") == 0)
         {
@@ -144,7 +144,7 @@ static Object *Char_mul(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__mul__(toCall, other);
         }
@@ -165,7 +165,7 @@ static Object *Char_div(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Char"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Char"))
     {
       if (strcmp(second->__name__, "Char") == 0)
         {
@@ -176,7 +176,7 @@ static Object *Char_div(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__div__(toCall, other);
         }
@@ -197,7 +197,7 @@ static bool Char_eq(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Char"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Char"))
     {
       if (strcmp(second->__name__, "Char") == 0)
         {
@@ -206,7 +206,7 @@ static bool Char_eq(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__eq__(toCall, other);
         }
@@ -227,7 +227,7 @@ static bool Char_gt(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Char"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Char"))
     {
       if (strcmp(second->__name__, "Char") == 0)
         {
@@ -236,7 +236,7 @@ static bool Char_gt(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__gt__(toCall, other);
         }
@@ -257,7 +257,7 @@ static bool Char_lt(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Char"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Char"))
     {
       if (strcmp(second->__name__, "Char") == 0)
         {
@@ -266,7 +266,7 @@ static bool Char_lt(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__lt__(toCall, other);
         }
