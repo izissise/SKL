@@ -68,7 +68,7 @@ void ArrayIterator_setval(ArrayIteratorClass* self, ...)
 
     va_start(ap, self);
     delete(self->_array->_tab[self->_idx]);
-    va_new(self->_array->_tab[self->_idx], &ap);
+    self->_array->_tab[self->_idx] = va_new(self->_array->_type, &ap);
     va_end(ap);
 }
 
