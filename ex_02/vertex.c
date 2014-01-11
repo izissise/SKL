@@ -1,3 +1,14 @@
+/*
+** vertex.c for rush in /home/lavand_m/Desktop/piscine/piscinecpprush1
+**
+** Made by Maxime
+** Login   <lavand_m@epitech.net>
+**
+** Started on  Sat Jan 11 10:57:39 2014 Maxime
+** Last update Sat Jan 11 10:57:48 2014 Maxime
+*/
+
+#include <stdlib.h>
 #include <stdio.h>
 #include "point.h"
 
