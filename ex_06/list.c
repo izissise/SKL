@@ -13,68 +13,68 @@ typedef struct
     Class* _type;
     size_t _size;
     Object** _tab;
-} ArrayClass;
+} ListClass;
 
 typedef struct {
     Iterator base;
-    ArrayClass* _array;
+    ListClass* _array;
     size_t _idx;
-} ArrayIteratorClass;
+} ListIteratorClass;
 
-Object* Array_getitem(ArrayClass* self, ...);
-size_t Array_len(ArrayClass* self);
-void Array_setitem(ArrayClass* self, ...);
+Object* List_getitem(ListClass* self, ...);
+size_t List_len(ListClass* self);
+void List_setitem(ListClass* self, ...);
 
-void ArrayIterator_ctor(ArrayIteratorClass* self, va_list* args)
+void ListIterator_ctor(ListIteratorClass* self, va_list* args)
 {
     int tmp;
 
     if (self == NULL || args == NULL)
       return ;
-    self->_array = (ArrayClass*)va_arg(*args, void*);
+    self->_array = (ListClass*)va_arg(*args, void*);
     tmp = va_arg(*args, int);
     if (tmp == 1)
-        self->_idx = Array_len(self->_array);
+        self->_idx = List_len(self->_array);
     else
         self->_idx = 0;
 }
 
-bool ArrayIterator_eq(ArrayIteratorClass* self, ArrayIteratorClass* other)
+bool ListIterator_eq(ListIteratorClass* self, ListIteratorClass* other)
 {
   if (self == NULL || other == NULL)
     return 0;
     return(self->_idx == other->_idx);
 }
 
-bool ArrayIterator_gt(ArrayIteratorClass* self, ArrayIteratorClass* other)
+bool ListIterator_gt(ListIteratorClass* self, ListIteratorClass* other)
 {
   if (self == NULL || other == NULL)
     return 0;
     return(self->_idx > other->_idx);
 }
 
-bool ArrayIterator_lt(ArrayIteratorClass* self, ArrayIteratorClass* other)
+bool ListIterator_lt(ListIteratorClass* self, ListIteratorClass* other)
 {
   if (self == NULL || other == NULL)
     return 0;
     return(self->_idx < other->_idx);
 }
 
-void ArrayIterator_incr(ArrayIteratorClass* self)
+void ListIterator_incr(ListIteratorClass* self)
 {
   if (self == NULL)
     return ;
     self->_idx++;
 }
 
-Object* ArrayIterator_getval(ArrayIteratorClass* self)
+Object* ListIterator_getval(ListIteratorClass* self)
 {
   if (self == NULL)
     return NULL;
-    return (Array_getitem(self->_array, self->_idx));
+    return (List_getitem(self->_array, self->_idx));
 }
 
-void ArrayIterator_setval(ArrayIteratorClass* self, ...)
+void ListIterator_setval(ListIteratorClass* self, ...)
 {
     va_list	ap;
 
@@ -86,29 +86,29 @@ void ArrayIterator_setval(ArrayIteratorClass* self, ...)
     va_end(ap);
 }
 
-static ArrayIteratorClass ArrayIteratorDescr = {
+static ListIteratorClass ListIteratorDescr = {
     {
         {
-            sizeof(ArrayIteratorClass), "ArrayIterator",
-            (ctor_t) &ArrayIterator_ctor,
+            sizeof(ListIteratorClass), "ListIterator",
+            (ctor_t) &ListIterator_ctor,
             NULL, /* dtor */
             NULL, /* str */
             NULL, NULL, NULL, NULL, /* add, sub, mul, div */
-            (binary_comparator_t) &ArrayIterator_eq,
-            (binary_comparator_t) &ArrayIterator_gt,
-            (binary_comparator_t) &ArrayIterator_lt,
+            (binary_comparator_t) &ListIterator_eq,
+            (binary_comparator_t) &ListIterator_gt,
+            (binary_comparator_t) &ListIterator_lt,
         },
-        (incr_t) &ArrayIterator_incr,
-        (getval_t) &ArrayIterator_getval,
-        (setval_t) &ArrayIterator_setval,
+        (incr_t) &ListIterator_incr,
+        (getval_t) &ListIterator_getval,
+        (setval_t) &ListIterator_setval,
     },
     NULL,
     0
 };
 
-static Class* ArrayIterator = (Class*) &ArrayIteratorDescr;
+static Class* ListIterator = (Class*) &ListIteratorDescr;
 
-void Array_ctor(ArrayClass* self, va_list* args)
+void List_ctor(ListClass* self, va_list* args)
 {
     int i;
     va_list ap;
@@ -128,7 +128,7 @@ void Array_ctor(ArrayClass* self, va_list* args)
     self->_tab[i] = NULL;
 }
 
-void Array_dtor(ArrayClass* self)
+void List_dtor(ListClass* self)
 {
     int i;
 
@@ -144,28 +144,28 @@ void Array_dtor(ArrayClass* self)
     self->_tab = NULL;
 }
 
-size_t Array_len(ArrayClass* self)
+size_t List_len(ListClass* self)
 {
   if (self == NULL)
     return ((size_t)0);
   return ((size_t)self->_size);
 }
 
-Iterator* Array_begin(ArrayClass* self)
+Iterator* List_begin(ListClass* self)
 {
   if (self == NULL)
     return NULL;
-  return (new(ArrayIterator, self, 0));
+  return (new(ListIterator, self, 0));
 }
 
-Iterator* Array_end(ArrayClass* self)
+Iterator* List_end(ListClass* self)
 {
   if (self == NULL)
     return NULL;
-  return (new(ArrayIterator, self, 1));
+  return (new(ListIterator, self, 1));
 }
 
-Object* Array_getitem(ArrayClass* self, ...)
+Object* List_getitem(ListClass* self, ...)
 {
     int id;
     va_list	ap;
@@ -181,7 +181,7 @@ Object* Array_getitem(ArrayClass* self, ...)
 }
 
 
-void Array_setitem(ArrayClass* self, ...)
+void List_setitem(ListClass* self, ...)
 {
     int id;
     va_list	ap;
@@ -195,22 +195,22 @@ void Array_setitem(ArrayClass* self, ...)
     va_end(ap);
 }
 
-static ArrayClass _descr = {
+static ListClass _descr = {
     { /* Container */
         { /* Class */
-            sizeof(ArrayClass), "Array",
-            (ctor_t) &Array_ctor, (dtor_t) &Array_dtor,
+            sizeof(ListClass), "List",
+            (ctor_t) &List_ctor, (dtor_t) &List_dtor,
             NULL, /*str */
             NULL, NULL, NULL, NULL, /* add, sub, mul, div */
             NULL, NULL, NULL, /* eq, gt, lt */
         },
-        (len_t) &Array_len,
-        (iter_t) &Array_begin,
-        (iter_t) &Array_end,
-        (getitem_t) &Array_getitem,
-        (setitem_t) &Array_setitem,
+        (len_t) &List_len,
+        (iter_t) &List_begin,
+        (iter_t) &List_end,
+        (getitem_t) &List_getitem,
+        (setitem_t) &List_setitem,
     },
     NULL, 0, NULL
 };
 
-Class* Array = (Class*) &_descr;
+Class* List = (Class*) &_descr;

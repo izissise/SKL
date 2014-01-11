@@ -66,7 +66,7 @@ static Object *Int_add(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Int"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Int"))
     {
       if (strcmp(second->__name__, "Int") == 0)
         {
@@ -75,7 +75,7 @@ static Object *Int_add(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__add__(toCall, other);
         }
@@ -96,7 +96,7 @@ static Object *Int_sub(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Int"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Int"))
     {
       if (strcmp(second->__name__, "Int") == 0)
         {
@@ -105,7 +105,7 @@ static Object *Int_sub(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__sub__(toCall, other);
         }
@@ -126,7 +126,7 @@ static Object *Int_mul(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Int"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Int"))
     {
       if (strcmp(second->__name__, "Int") == 0)
         {
@@ -135,7 +135,7 @@ static Object *Int_mul(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__mul__(toCall, other);
         }
@@ -156,7 +156,7 @@ static Object *Int_div(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Int"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Int"))
     {
       if (strcmp(second->__name__, "Int") == 0)
         {
@@ -167,7 +167,7 @@ static Object *Int_div(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__div__(toCall, other);
         }
@@ -188,7 +188,7 @@ static bool Int_eq(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Int"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Int"))
     {
       if (strcmp(second->__name__, "Int") == 0)
         {
@@ -197,7 +197,7 @@ static bool Int_eq(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__eq__(toCall, other);
         }
@@ -218,7 +218,7 @@ static bool Int_gt(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Int"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Int"))
     {
       if (strcmp(second->__name__, "Int") == 0)
         {
@@ -227,7 +227,7 @@ static bool Int_gt(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__gt__(toCall, other);
         }
@@ -248,7 +248,7 @@ static bool Int_lt(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Int"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Int"))
     {
       if (strcmp(second->__name__, "Int") == 0)
         {
@@ -257,7 +257,7 @@ static bool Int_lt(const Object* self, const Object* other)
         }
       if (strcmp(second->__name__, "Float") == 0)
         {
-          toCall = new(Float, (int)this->x);
+          toCall = new(Float, (float)this->x);
           tmp = (Class*)toCall;
           return tmp->__lt__(toCall, other);
         }
