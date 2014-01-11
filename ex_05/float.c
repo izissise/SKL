@@ -66,7 +66,7 @@ static Object *Float_add(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Float"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Float"))
     {
       if (strcmp(second->__name__, "Float") == 0)
         {
@@ -96,7 +96,7 @@ static Object *Float_sub(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Float"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Float"))
     {
       if (strcmp(second->__name__, "Float") == 0)
         {
@@ -126,7 +126,7 @@ static Object *Float_mul(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Float"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Float"))
     {
       if (strcmp(second->__name__, "Float") == 0)
         {
@@ -156,7 +156,7 @@ static Object *Float_div(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Float"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Float"))
     {
       if (strcmp(second->__name__, "Float") == 0)
         {
@@ -188,7 +188,7 @@ static bool Float_eq(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Float"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Float"))
     {
       if (strcmp(second->__name__, "Float") == 0)
         {
@@ -218,7 +218,7 @@ static bool Float_gt(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Float"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Float"))
     {
       if (strcmp(second->__name__, "Float") == 0)
         {
@@ -248,7 +248,7 @@ static bool Float_lt(const Object* self, const Object* other)
   Object *toCall;
   Class *tmp;
 
-  if (this != NULL && other != NULL && !strcmp(this->base.__name__, "Float"))
+  if (this != NULL && other != NULL && !strcmp((this->base).__name__, "Float"))
     {
       if (strcmp(second->__name__, "Float") == 0)
         {
