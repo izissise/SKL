@@ -5,7 +5,7 @@
 ** Login   <debas_e@epitech.net>
 ** 
 ** Started on  Sat Jan 11 19:08:38 2014 Etienne
-** Last update Sat Jan 11 19:57:58 2014 jonathan.collinet
+** Last update Sat Jan 11 22:17:12 2014 jonathan.collinet
 */
 
 
@@ -62,32 +62,42 @@ static const char *String_c_str(Object *self)
   return (((StringClass*)self)->s);
 }
 
-/* static Object *String_append(const Object* self, const Objet *other) */
-/* { */
-/*   StringClass *a; */
-/*   StringClass *b; */
+static Object *String_append_s(const Object* self, const Object *other)
+{
+  StringClass *a;
+  StringClass *b;
+  char const	*tmp;
 
-/*   a = (StringClass *)self; */
-/*   b = (StringClass *)other; */
-/*   if ((a != NULL && !strcmp(a->base.__name__, "String")) && (b != NULL && !strcmp(b->base.__name__, "String"))) */
-/*     return(new(Point, )); */
-/*   return NULL; */
-/* } */
+  a = (StringClass *)self;
+  b = (StringClass *)other;
+  tmp = a->s;
+  if ((a != NULL && !strcmp(a->base.__name__, "String")) && (b != NULL && !strcmp(b->base.__name__, "String")))
+    {
+      if (b->s)
+	{
+	  len = strlen(b->s);
+	  if (a->s)
+	    len += strlen(a->s);
+	  a->s = realloc(a->s, (sizeof(char) * len));
+	  memset(a->s + strlen(a->s), 0, len * sizeof(char));
+	  if (a->s != tmp)
+	    delete(String, a);
+	  strcat(a->s, b->s);
+	  return(new(String, a->s));
+	}
+    }
+  return (self);
+}
 
-/* static Object *String_append_s(const Object* self, const Object* other) */
-/* { */
-/*   StringClass *a; */
-/*   StringClass *b; */
-
-/*   a = (StringClass *)self; */
-/*   b = (StringClass *)other; */
-/*   if ((a != NULL && !strcmp(a->base.__name__, "Point")) && (b != NULL && !strcmp(b->base.__name__, "Point"))) */
-/*     return(new(Point, a->x + b->x, a->y + b->y)); */
-/*   return NULL; */
-/* } */
+static Object *String_append_c(const Object* self, const char* other)
+{
+  StringClass *a;
+  a = new(String, other);
+  return (String_append_s(self, a));
+}
 
 static StringClass _description = {
-  { sizeof(StringClass), "String", &String_ctor, &String_dtor, &String_str, &String_c_str},
+  { sizeof(StringClass), "String", &String_ctor, &String_dtor, &String_str, &String_c_str, &String_append_s, &String_append_c },
   NULL, NULL
 };
 
