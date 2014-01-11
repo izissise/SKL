@@ -54,4 +54,5 @@ int main() {
   test(new(Int, 42), new(Float, 42.42f), new(Float, 66.66f));
   //compareAndDivide(new(Int, atoi(av[1])),new(Int,atoi(av[2])));
   return 0;
+
 }

@@ -6,6 +6,7 @@
 #include "array.h"
 #include "new.h"
 
+
 typedef struct
 {
     Container base;
@@ -20,32 +21,54 @@ typedef struct {
     size_t _idx;
 } ArrayIteratorClass;
 
+Object* Array_getitem(ArrayClass* self, ...);
+size_t Array_len(ArrayClass* self);
+void Array_setitem(ArrayClass* self, ...);
+
 void ArrayIterator_ctor(ArrayIteratorClass* self, va_list* args)
 {
+    int tmp;
+
+    self->_array = (ArrayClass*)va_arg(*args, void*);
+    tmp = va_arg(*args, int);
+    if (tmp == 1)
+        self->_idx = Array_len(self->_array);
+    else
+        self->_idx = 0;
 }
 
 bool ArrayIterator_eq(ArrayIteratorClass* self, ArrayIteratorClass* other)
 {
+    return(self->_idx == other->_idx);
 }
 
 bool ArrayIterator_gt(ArrayIteratorClass* self, ArrayIteratorClass* other)
 {
+    return(self->_idx > other->_idx);
 }
 
 bool ArrayIterator_lt(ArrayIteratorClass* self, ArrayIteratorClass* other)
 {
+    return(self->_idx < other->_idx);
 }
 
 void ArrayIterator_incr(ArrayIteratorClass* self)
 {
+    self->_idx++;
 }
 
 Object* ArrayIterator_getval(ArrayIteratorClass* self)
 {
+    return (Array_getitem(self->_array, self->_idx));
 }
 
 void ArrayIterator_setval(ArrayIteratorClass* self, ...)
 {
+    va_list	ap;
+
+    va_start(ap, self);
+    Array_setitem(self->_array, self->_idx, va_arg(ap, int));
+    va_end(ap);
 }
 
 static ArrayIteratorClass ArrayIteratorDescr = {
@@ -72,31 +95,78 @@ static Class* ArrayIterator = (Class*) &ArrayIteratorDescr;
 
 void Array_ctor(ArrayClass* self, va_list* args)
 {
+    int i;
+    int tmp;
+
+    self->_size = (size_t) va_arg(*args, int);
+    self->_type = (Class*) va_arg(*args, void *);
+    self->_tab = malloc((self->_size + 1) * sizeof(Object**));
+    i = 0;
+    tmp = va_arg(*args, int);
+    while (i < self->_size)
+    {
+        self->_tab[i] = new(self->_type, tmp);
+        i++;
+    }
+    self->_tab[i] = NULL;
 }
 
 void Array_dtor(ArrayClass* self)
 {
+    int i;
+
+    i = 0;
+    while (i < self->_size)
+    {
+        delete(self->_tab[i]);
+	printf ("%d\n",i);
+        i++;
+    }
+    free(self->_tab);
+    self->_tab = NULL;
 }
 
 size_t Array_len(ArrayClass* self)
 {
+  return ((size_t)self->_size);
 }
 
 Iterator* Array_begin(ArrayClass* self)
 {
+    return (new(ArrayIterator, self, 0));
 }
 
 Iterator* Array_end(ArrayClass* self)
 {
+    return (new(ArrayIterator, self, 1));
 }
 
 Object* Array_getitem(ArrayClass* self, ...)
 {
+    int id;
+    va_list	ap;
+
+    va_start(ap, self);
+    id = va_arg(ap, int);
+    va_end(ap);
+    if (id > self->_size)
+        return (NULL);
+    return (self->_tab[id]);
 }
 
 
 void Array_setitem(ArrayClass* self, ...)
 {
+    int id;
+    int value;
+    va_list	ap;
+
+    va_start(ap, self);
+    id = va_arg(ap, int);
+    value = va_arg(ap, int);
+    va_end(ap);
+    delete(self->_tab[id]);
+    new(self->_tab[id], value);
 }
 
 static ArrayClass _descr = {
@@ -118,4 +188,3 @@ static ArrayClass _descr = {
 };
 
 Class* Array = (Class*) &_descr;
-
