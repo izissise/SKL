@@ -5,7 +5,7 @@
 ** Login   <debas_e@epitech.net>
 ** 
 ** Started on  Sat Jan 11 19:08:38 2014 Etienne
-** Last update Sat Jan 11 19:25:54 2014 Etienne
+** Last update Sat Jan 11 19:57:58 2014 jonathan.collinet
 */
 
 
@@ -18,10 +18,10 @@
 
 typedef struct
 {
-  Class base;
-  char	*s;
-  char *str;
-} StringClass;
+  Class		base;
+  const char	*s;
+  char		*str;
+}		StringClass;
 
 static void String_ctor(Object* self, va_list *ap)
 {
@@ -57,33 +57,37 @@ static char const *String_str(Object* self)
   return NULL;
 }
 
-/*static Object *Point_add(const Object* self, const Object* other)
+static const char *String_c_str(Object *self)
 {
-  PointClass *a;
-  PointClass *b;
-
-  a = (PointClass *)self;
-  b = (PointClass *)other;
-  if ((a != NULL && !strcmp(a->base.__name__, "Point")) && (b != NULL && !strcmp(b->base.__name__, "Point")))
-    return(new(Point, a->x + b->x, a->y + b->y));
-  return NULL;
+  return (((StringClass*)self)->s);
 }
 
-static Object *Point_sub(const Object* self, const Object* other)
-{
-  PointClass *a;
-  PointClass *b;
+/* static Object *String_append(const Object* self, const Objet *other) */
+/* { */
+/*   StringClass *a; */
+/*   StringClass *b; */
 
-  a = (PointClass *)self;
-  b = (PointClass *)other;
-  if ((a != NULL && !strcmp(a->base.__name__, "Point")) && (b != NULL && !strcmp(b->base.__name__, "Point")))
-    return(new(Point, a->x - b->x, a->y - b->y));
-  return NULL;
-}
-*/
+/*   a = (StringClass *)self; */
+/*   b = (StringClass *)other; */
+/*   if ((a != NULL && !strcmp(a->base.__name__, "String")) && (b != NULL && !strcmp(b->base.__name__, "String"))) */
+/*     return(new(Point, )); */
+/*   return NULL; */
+/* } */
+
+/* static Object *String_append_s(const Object* self, const Object* other) */
+/* { */
+/*   StringClass *a; */
+/*   StringClass *b; */
+
+/*   a = (StringClass *)self; */
+/*   b = (StringClass *)other; */
+/*   if ((a != NULL && !strcmp(a->base.__name__, "Point")) && (b != NULL && !strcmp(b->base.__name__, "Point"))) */
+/*     return(new(Point, a->x + b->x, a->y + b->y)); */
+/*   return NULL; */
+/* } */
 
 static StringClass _description = {
-  { sizeof(StringClass), "String", &String_ctor, &String_dtor, &String_str},
+  { sizeof(StringClass), "String", &String_ctor, &String_dtor, &String_str, &String_c_str},
   NULL, NULL
 };
 
