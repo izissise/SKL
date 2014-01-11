@@ -5,7 +5,7 @@
 ** Login   <lavand_m@epitech.net>
 **
 ** Started on  Sat Jan 11 10:57:39 2014 Maxime
-** Last update Sat Jan 11 11:31:29 2014 Maxime
+** Last update Sat Jan 11 11:39:27 2014 Maxime
 */
 
 #include <stdlib.h>
@@ -21,24 +21,33 @@ typedef struct
 
 static void Vertex_ctor(Object* self, va_list *ap)
 {
-  self->x = va_arg(*ap, int);
-  self->y = va_arg(*ap, int);
-  self->z = va_arg(*ap, int);
-  self->str = NULL;
+  VertexClass *a;
+
+  a = (VertexClass *)self;
+  a->x =(int) va_arg(*ap, int);
+  a->y =(int) va_arg(*ap, int);
+  a->z =(int) va_arg(*ap, int);
+  a->str = NULL;
 }
 
 static void Vertex_dtor(Object* self)
 {
-  free(self->str);
+  VertexClass *a;
+
+  a = (VertexClass *) self;
+  free(a->str);
 }
 
 static char const *Vertex_str(Object* self)
 {
-  if (self->str != NULL)
-    free(str);
-  self->str = malloc(46);
-  snprintf(self->str, 46, "<Vertex (%d, %d, %d)>", self->x, self->y, self->y);
-  return(self->str);
+  VertexClass *a;
+
+  a = (VertexClass *)self;
+  if (a->str != NULL)
+    free(a->str);
+  a->str = malloc(46);
+  snprintf(a->str, 46, "<Vertex (%d, %d, %d)>", a->x, a->y, a->y);
+  return(a->str);
 }
 
 static VertexClass _description = {

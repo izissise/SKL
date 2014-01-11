@@ -5,7 +5,7 @@
 ** Login   <lavand_m@epitech.net>
 **
 ** Started on  Sat Jan 11 10:57:16 2014 Maxime
-** Last update Sat Jan 11 11:31:40 2014 Maxime
+** Last update Sat Jan 11 11:39:12 2014 Maxime
 */
 
 #include <stdarg.h>
@@ -22,24 +22,32 @@ typedef struct
 
 static void Point_ctor(Object* self, va_list *ap)
 {
+  PointClass *a;
 
-  self->x = va_arg(*ap, int);
-  self->y = va_arg(*ap, int);
-  self->str = NULL;
+  a = (PointClass *) self;
+  a->x = (int)va_arg(*ap, int);
+  a->y = (int)va_arg(*ap, int);
+  a->str = NULL;
 }
 
 static void Point_dtor(Object* self)
 {
-  free(self->str);
+  PointClass *a;
+
+  a = (PointClass *) self;
+  free(a->str);
 }
 
 static char const *Point_str(Object* self)
 {
-  if (self->str != NULL)
-    free(str);
-  self->str = malloc(33);
-  snprintf(self->str, 33, "<Point (%d, %d)>", self->x, self->y);
-  return(self->str);
+  PointClass *a;
+
+  a = (PointClass *) self;
+  if (a->str != NULL)
+    free(a->str);
+  a->str = malloc(33);
+  snprintf(a->str, 33, "<Point (%d, %d)>", a->x, a->y);
+  return(a->str);
 }
 
 static PointClass _description = {
