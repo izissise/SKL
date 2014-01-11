@@ -52,7 +52,7 @@ static char const *Float_str(Object* self)
       if (a->str != NULL)
         free(a->str);
       a->str = malloc(200);
-      snprintf(a->str, 199, "<%s (%f)>", a->base.__name__, a->x);
+      snprintf(a->str, 199, "<%s (%f)>", (a->base).__name__, a->x);
       return(a->str);
     }
   return NULL;

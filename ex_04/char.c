@@ -62,7 +62,7 @@ static char const *Char_str(Object* self)
       if (a->str != NULL)
         free(a->str);
       a->str = malloc(200);
-      snprintf(a->str, 199, "<%s (%d)>", a->base.__name__, (int)a->x);
+      snprintf(a->str, 199, "<%s (%d)>", (a->base).__name__, (int)a->x);
       return(a->str);
     }
   return NULL;

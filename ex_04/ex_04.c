@@ -29,6 +29,37 @@ int main()
     test(new(Char, 'a'), new(Char, 'a'), new(Char, 'd'));
     test(new(Float, 3.14159f), new(Float, 3.14159f), new(Float, 3.15f));
 
+    Object * p1 = new(Float, 12.0),
+           * p2 = new(Float, 2.0),
+           * p3 = NULL,
+           * p4 = NULL,
+           * v1 = new(Char, 65),
+           * v2 = new(Int, 4),
+           * v3 = NULL,
+           * v4 = NULL;
+
+    p3 = add(p1, p2);
+    printf("%s + %s = %s\n", str(p1), str(p2), str(p3));
+    p4 = sub(p1, p2);
+    printf("%s - %s = %s\n", str(p1), str(p2), str(p4));
+
+    v3 = add(v1, v2);
+    printf("%s + %s = %s\n", str(v1), str(v2), str(v3));
+    v4 = sub(v1, v2);
+    printf("%s - %s = %s\n", str(v1), str(v2), str(v4));
+
+    delete(p1);
+    delete(p2);
+    delete(p3);
+    delete(p4);
+    delete(v1);
+    delete(v2);
+    delete(v3);
+    delete(v4);
+
+    return 0;
+    return 0;
+
     return 0;
 }
 
