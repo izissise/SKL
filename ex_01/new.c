@@ -19,11 +19,14 @@ Object		*new(Class *object)
   Object	*ret;
 
   ret = NULL;
-  if ((ret = malloc(object->__size__)) == NULL)
-    raise("Out of memory");
-  memcpy(ret, object, object->__size__);
-  if (((Class*)ret)->__init__ != NULL)
-    ((Class*)ret)->__init__(ret);
+  if (object != NULL)
+    {
+      if ((ret = malloc(object->__size__)) == NULL)
+        raise("Out of memory");
+      memcpy(ret, object, object->__size__);
+      if (((Class*)ret)->__init__ != NULL)
+        ((Class*)ret)->__init__(ret);
+    }
   return (ret);
 }
 
