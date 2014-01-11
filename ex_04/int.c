@@ -201,19 +201,19 @@ static bool Int_eq(const Object* self, const Object* other)
     {
       a = (IntClass *)self;
       c = (FloatClass *)other;
-      return (a->x == (int)c->x ? true : false);
+      return (a->x == (int)c->x);
     }
   if (strcmp(e->__name__, "Char") == 0)
     {
       a = (IntClass *)self;
       d = (CharClass *)other;
-      return (a->x == (int)d->x ? true : false);
+      return (a->x == (int)d->x);
     }
   if (strcmp(e->__name__, "Int") == 0)
     {
       a = (IntClass *)self;
       b = (IntClass *)other;
-      return(a->x == b->x ? true : false);
+      return(a->x == b->x);
     }
   return (false);
 }
@@ -232,19 +232,19 @@ static bool Int_gt(const Object* self, const Object* other)
     {
       a = (IntClass *)self;
       c = (FloatClass *)other;
-      return (a->x > c->x ? true : false);
+      return (a->x > c->x);
     }
   if (strcmp(e->__name__, "Char") == 0)
     {
       a = (IntClass *)self;
       d = (CharClass *)other;
-      return (a->x > d->x ? true : false);
+      return (a->x > d->x);
     }
   if (strcmp(e->__name__, "Int") == 0)
     {
       a = (IntClass *)self;
       b = (IntClass *)other;
-      return(a->x > b->x ? true : false);
+      return(a->x > b->x);
     }
   return (false);
 }
@@ -263,19 +263,19 @@ static bool Int_lt(const Object* self, const Object* other)
     {
       a = (IntClass *)self;
       c = (FloatClass *)other;
-      return (a->x < c->x ? true : false);
+      return (a->x < c->x);
     }
   if (strcmp(e->__name__, "Char") == 0)
     {
       a = (IntClass *)self;
       d = (CharClass *)other;
-      return (a->x < d->x ? true : false);
+      return (a->x < d->x);
     }
   if (strcmp(e->__name__, "Int") == 0)
     {
       a = (IntClass *)self;
       b = (IntClass *)other;
-      return(a->x < b->x ? true : false);
+      return(a->x < b->x);
     }
   return (false);
 }

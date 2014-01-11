@@ -21,240 +21,265 @@ typedef struct
   char *str;
 } FloatClass;
 
-static void	Float_ctor(Object* self, va_list *ap)
+typedef struct
 {
-  FloatClass* this = (FloatClass*)self;
-  double tmp = (double)(va_arg(*ap, double));
-  this->x = tmp;
+  Class base;
+  char x;
+  char *str;
+} CharClass;
+
+typedef struct
+{
+  Class base;
+  int x;
+  char *str;
+} IntClass;
+
+static void Char_ctor(Object* self, va_list *ap)
+{
+  CharClass *a;
+
+  a = (CharClass *) self;
+  a->x = (char)va_arg(*ap, int);
+  a->str = NULL;
 }
 
-static void	Float_dtor(Object* self)
+static void Char_dtor(Object* self)
 {
-  FloatClass *a;
+  CharClass *a;
 
-  a = (FloatClass*)self;
+  a = (CharClass *) self;
   free(a->str);
 }
 
-static char const *Float_str(Object* self)
+static char const *Char_str(Object* self)
 {
-  FloatClass *a;
+  CharClass *a;
 
-  a = (FloatClass*)self;
+  a = (CharClass *) self;
   if (a->str != NULL)
     free(a->str);
   a->str = malloc(200);
-  snprintf(a->str, 200, "<%s (%f)>", (a->base).__name__, a->x);
+  snprintf(a->str, 199, "<%s (%d)>",a->base.__name__, (int)a->x);
   return(a->str);
 }
 
-static Object* Float_add(const Object* self, const Object* other)
+static Object *Char_add(const Object* self, const Object* other)
 {
-  FloatClass	*this;
-  FloatClass	*res = NULL;
+  CharClass *a;
+  CharClass *b;
+  FloatClass *c;
+  IntClass *d;
+  Class *e;
 
-  this = (FloatClass*)self;
-  if (other != NULL)
+  e = (Class *)other;
+  if (strcmp(e->__name__, "Float") == 0)
     {
-      Class* type = (Class*)other;
-      if (!strcmp(type->__name__, "Float"))
-        {
-          FloatClass	*second = (FloatClass*)other;
-          res = new(Float, this->x + second->x);
-        }
-     /* if (!strcmp(type->__name__, "Int"))
-        {
-          IntClass	*second = (IntClass*)other;
-          res = new(Float, this->x + (float)(second->x));
-        }
-      if (!strcmp(type->__name__, "Char"))
-        {
-          Char	*second = (Char*)other;
-          res = new(Float, this->x + (float)(second->x));
-        }*/
+      a = (CharClass *)self;
+      c = (FloatClass *)other;
+      return (new(Char, (a->x + (char)c->x)));
     }
-  return res;
+  if (strcmp(e->__name__, "Int") == 0)
+    {
+      a = (CharClass *)self;
+      d = (IntClass *)other;
+      return (new(Char, (a->x + (int)d->x)));
+    }
+  if (strcmp(e->__name__, "Char") == 0)
+    {
+      a = (CharClass *)self;
+      b = (CharClass *)other;
+      return(new(Char, a->x + b->x));
+    }
+  return (NULL);
 }
 
-static Object* Float_sub(const Object* self, const Object* other)
+static Object *Char_sub(const Object* self, const Object* other)
 {
-  FloatClass	*this;
-  FloatClass	*res = NULL;
+  CharClass *a;
+  CharClass *b;
+  FloatClass *c;
+  IntClass *d;
+  Class *e;
 
-  this = (FloatClass*)self;
-  if (other != NULL)
+  e = (Class *)other;
+  if (strcmp(e->__name__, "Float") == 0)
     {
-      Class* type = (Class*)other;
-      if (!strcmp(type->__name__, "Float"))
-        {
-          FloatClass	*second = (FloatClass*)other;
-          res = new(Float, this->x - second->x);
-        }
-   /*   if (!strcmp(type->__name__, "Int"))
-        {
-          IntClass	*second = (IntClass*)other;
-          res = new(Float, this->x - (float)(second->x));
-        }
-      if (!strcmp(type->__name__, "Char"))
-        {
-          Char	*second = (Char*)other;
-          res = new(Float, this->x - (float)(second->x));
-        }*/
+      a = (CharClass *)self;
+      c = (FloatClass *)other;
+      return (new(Char, (a->x - (char)c->x)));
     }
-  return res;
+  if (strcmp(e->__name__, "Int") == 0)
+    {
+      a = (CharClass *)self;
+      d = (IntClass *)other;
+      return (new(Char, (a->x - (int)d->x)));
+    }
+  if (strcmp(e->__name__, "Char") == 0)
+    {
+      a = (CharClass *)self;
+      b = (CharClass *)other;
+      return(new(Char, a->x - b->x));
+    }
+  return (NULL);
 }
 
-static Object* Float_mul(const Object* self, const Object* other)
+static Object *Char_mul(const Object* self, const Object* other)
 {
-  FloatClass	*this;
-  FloatClass	*res = NULL;
+  CharClass *a;
+  CharClass *b;
+  FloatClass *c;
+  IntClass *d;
+  Class *e;
 
-  this = (FloatClass*)self;
-  if (other != NULL)
+  e = (Class *)other;
+  if (strcmp(e->__name__, "Float") == 0)
     {
-      Class* type = (Class*)other;
-      if (!strcmp(type->__name__, "Float"))
-        {
-          FloatClass	*second = (FloatClass*)other;
-          res = new(Float, this->x * second->x);
-        }
-    /*  if (!strcmp(type->__name__, "Int"))
-        {
-          IntClass	*second = (IntClass*)other;
-          res = new(Float, this->x * (float)(second->x));
-        }
-      if (!strcmp(type->__name__, "Char"))
-        {
-          Char	*second = (Char*)other;
-          res = new(Float, this->x * (float)(second->x));
-        }*/
+      a = (CharClass *)self;
+      c = (FloatClass *)other;
+      return (new(Char, (a->x * (char)c->x)));
     }
-  return res;
+  if (strcmp(e->__name__, "Int") == 0)
+    {
+      a = (CharClass *)self;
+      d = (IntClass *)other;
+      return (new(Char, (a->x * (int)d->x)));
+    }
+  if (strcmp(e->__name__, "Char") == 0)
+    {
+      a = (CharClass *)self;
+      b = (CharClass *)other;
+      return(new(Char, a->x * b->x));
+    }
+  return (NULL);
 }
 
-static Object* Float_div(const Object* self, const Object* other)
+static Object *Char_div(const Object* self, const Object* other)
 {
-  FloatClass	*this;
-  FloatClass	*res = NULL;
+  CharClass *a;
+  CharClass *b;
+  FloatClass *c;
+  IntClass *d;
+  Class *e;
 
-  this = (FloatClass*)self;
-  if (other != NULL)
+  e = (Class *)other;
+  if (strcmp(e->__name__, "Float") == 0)
     {
-      Class* type = (Class*)other;
-      if (!strcmp(type->__name__, "Float"))
-        {
-          FloatClass	*second = (FloatClass*)other;
-          if (second->x == 0)
-            res = new(Float, 0.0);
-          else
-            res = new(Float, this->x / (float)second->x);
-        }
-      /*if (!strcmp(type->__name__, "Int"))
-        {
-          IntClass	*second = (IntClass*)other;
-          if (second->x == 0)
-            res = new(Float, 0.0);
-          else
-            res = new(Float, this->x / (float)second->x);
-        }
-      if (!strcmp(type->__name__, "Char"))
-        {
-          Char	*second = (Char*)other;
-          if (second->x == 0)
-            res = new(Float, 0.0);
-          else
-            res = new(Float, this->x / (float)second->x);
-        }*/
+      a = (CharClass *)self;
+      c = (FloatClass *)other;
+      return (new(Char, (c->x == 0 ? 0 :(a->x / (char)c->x))));
     }
-  return res;
+  if (strcmp(e->__name__, "Int") == 0)
+    {
+      a = (CharClass *)self;
+      d = (IntClass *)other;
+      return (new(Char, (d->x == 0 ? 0 :(a->x / (int)d->x))));
+    }
+  if (strcmp(e->__name__, "Char") == 0)
+    {
+      a = (CharClass *)self;
+      b = (CharClass *)other;
+      return(new(Char, (b->x == 0 ? 0 :(a->x / b->x))));
+    }
+  return (NULL);
 }
 
-static bool Float_eq(const Object* self, const Object* other)
+static bool Char_eq(const Object* self, const Object* other)
 {
-  FloatClass	*this;
+  //==
+  CharClass *a;
+  CharClass *b;
+  FloatClass *c;
+  IntClass *d;
+  Class *e;
 
-  this = (FloatClass*)self;
-  if (other != NULL)
+  e = (Class *)other;
+  if (strcmp(e->__name__, "Float") == 0)
     {
-      Class* type = (Class*)other;
-      if (!strcmp(type->__name__, "Float"))
-        {
-          FloatClass	*second = (FloatClass*)other;
-          return (second->x == this->x);
-        }
-     /* if (!strcmp(type->__name__, "Int"))
-        {
-          IntClass	*second = (IntClass*)other;
-          return (second->x == this->x);
-        }
-      if (!strcmp(type->__name__, "Char"))
-        {
-          Char	*second = (Char*)other;
-          return (second->x == this->x);
-        }*/
+      a = (CharClass *)self;
+      c = (FloatClass *)other;
+      return (a->x == c->x);
     }
-  return false;
+  if (strcmp(e->__name__, "Int") == 0)
+    {
+      a = (CharClass *)self;
+      d = (IntClass *)other;
+      return (a->x == (int)d->x);
+    }
+  if (strcmp(e->__name__, "Char") == 0)
+    {
+      a = (CharClass *)self;
+      b = (CharClass *)other;
+      return(a->x == b->x);
+    }
+  return (false);
 }
 
-static bool Float_gt(const Object* self, const Object* other)
+static bool Char_gt(const Object* self, const Object* other)
 {
-  FloatClass	*this;
+  //>
+  CharClass *a;
+  CharClass *b;
+  FloatClass *c;
+  IntClass *d;
+  Class *e;
 
-  this = (FloatClass*)self;
-  if (other != NULL)
+  e = (Class *)other;
+  if (strcmp(e->__name__, "Float") == 0)
     {
-      Class* type = (Class*)other;
-      if (!strcmp(type->__name__, "Float"))
-        {
-          FloatClass	*second = (FloatClass*)other;
-          return (this->x > second->x);
-        }
-    /*  if (!strcmp(type->__name__, "Int"))
-        {
-          IntClass	*second = (IntClass*)other;
-          return (this->x > other->x);
-        }
-      if (!strcmp(type->__name__, "Char"))
-        {
-          Char	*second = (Char*)other;
-          return (this->x > other->x);
-        }*/
+      a = (CharClass *)self;
+      c = (FloatClass *)other;
+      return (a->x > c->x);
     }
-  return false;
+  if (strcmp(e->__name__, "Int") == 0)
+    {
+      a = (CharClass *)self;
+      d = (IntClass *)other;
+      return (a->x > (int)d->x);
+    }
+  if (strcmp(e->__name__, "Char") == 0)
+    {
+      a = (CharClass *)self;
+      b = (CharClass *)other;
+      return(a->x > b->x);
+    }
+  return (false);
 }
 
-static bool Float_lt(const Object* self, const Object* other)
+static bool Char_lt(const Object* self, const Object* other)
 {
-  FloatClass	*this;
+  //<
+  CharClass *a;
+  CharClass *b;
+  FloatClass *c;
+  IntClass *d;
+  Class *e;
 
-  this = (FloatClass*)self;
-  if (other != NULL)
+  e = (Class *)other;
+  if (strcmp(e->__name__, "Float") == 0)
     {
-      Class* type = (Class*)other;
-      if (!strcmp(type->__name__, "Float"))
-        {
-          FloatClass	*second = (FloatClass*)other;
-          return (this->x < second->x);
-        }
-   /*   if (!strcmp(type->__name__, "Int"))
-        {
-          IntClass	*second = (IntClass*)other;
-          return (this->x < other->x);
-        }
-      if (!strcmp(type->__name__, "Char"))
-        {
-          Char	*second = (Char*)other;
-          return (this->x < other->x);
-        }*/
+      a = (CharClass *)self;
+      c = (FloatClass *)other;
+      return (a->x < (char)c->x);
     }
-  return false;
+  if (strcmp(e->__name__, "Int") == 0)
+    {
+      a = (CharClass *)self;
+      d = (IntClass *)other;
+      return (a->x < (char)d->x);
+    }
+  if (strcmp(e->__name__, "Char") == 0)
+    {
+      a = (CharClass *)self;
+      b = (CharClass *)other;
+      return(a->x < b->x);
+    }
+  return (false);
 }
 
-static FloatClass _description = {
-  { sizeof(Float), "Float", &Float_ctor, &Float_dtor, &Float_str,
-    &Float_add, &Float_sub, &Float_mul, &Float_div, &Float_eq, &Float_gt, &Float_lt
-  },
-  0.0, NULL
+static CharClass _description = {
+  { sizeof(CharClass), "Char", &Char_ctor, &Char_dtor, &Char_str, &Char_add, &Char_sub, &Char_mul, &Char_div, &Char_eq, &Char_gt, &Char_lt},
+  0, NULL
 };
 
-Class* Float = (Class*) &_description;
+Class* Char = (Class*) &_description;

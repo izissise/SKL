@@ -38,9 +38,6 @@ typedef struct
   char *str;
 } IntClass;
 
-struct FloatClass;
-struct IntClass;
-
 static void Char_ctor(Object* self, va_list *ap)
 {
   CharClass *a;
@@ -204,19 +201,19 @@ static bool Char_eq(const Object* self, const Object* other)
     {
       a = (CharClass *)self;
       c = (FloatClass *)other;
-      return (a->x == c->x ? true : false);
+      return (a->x == c->x);
     }
   if (strcmp(e->__name__, "Int") == 0)
     {
       a = (CharClass *)self;
       d = (IntClass *)other;
-      return (a->x == (int)d->x ? true : false);
+      return (a->x == (int)d->x);
     }
   if (strcmp(e->__name__, "Char") == 0)
     {
       a = (CharClass *)self;
       b = (CharClass *)other;
-      return(a->x == b->x ? true : false);
+      return(a->x == b->x);
     }
   return (false);
 }
@@ -235,19 +232,19 @@ static bool Char_gt(const Object* self, const Object* other)
     {
       a = (CharClass *)self;
       c = (FloatClass *)other;
-      return (a->x > c->x ? true : false);
+      return (a->x > c->x);
     }
   if (strcmp(e->__name__, "Int") == 0)
     {
       a = (CharClass *)self;
       d = (IntClass *)other;
-      return (a->x > (int)d->x ? true : false);
+      return (a->x > (int)d->x);
     }
   if (strcmp(e->__name__, "Char") == 0)
     {
       a = (CharClass *)self;
       b = (CharClass *)other;
-      return(a->x > b->x ? true : false);
+      return(a->x > b->x);
     }
   return (false);
 }
@@ -266,19 +263,19 @@ static bool Char_lt(const Object* self, const Object* other)
     {
       a = (CharClass *)self;
       c = (FloatClass *)other;
-      return (a->x < (char)c->x ? true : false);
+      return (a->x < (char)c->x);
     }
   if (strcmp(e->__name__, "Int") == 0)
     {
       a = (CharClass *)self;
       d = (IntClass *)other;
-      return (a->x < (char)d->x ? true : false);
+      return (a->x < (char)d->x);
     }
   if (strcmp(e->__name__, "Char") == 0)
     {
       a = (CharClass *)self;
       b = (CharClass *)other;
-      return(a->x < b->x ? true : false);
+      return(a->x < b->x);
     }
   return (false);
 }
