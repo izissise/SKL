@@ -11,6 +11,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "point.h"
 #include "new.h"
 
@@ -36,7 +37,8 @@ static void Point_dtor(Object* self)
   PointClass *a;
 
   a = (PointClass *) self;
-  free(a->str);
+  if (a != NULL)
+    free(a->str);
 }
 
 static char const *Point_str(Object* self)
@@ -44,11 +46,15 @@ static char const *Point_str(Object* self)
   PointClass *a;
 
   a = (PointClass *) self;
-  if (a->str != NULL)
-    free(a->str);
-  a->str = malloc(200);
-  snprintf(a->str, 199, "<%s (%d, %d)>", a->str, a->x, a->y);
-  return(a->str);
+  if (a != NULL && !strcmp(a->base.__name__, "Point"))
+    {
+      if (a->str != NULL)
+        free(a->str);
+      a->str = malloc(200);
+      snprintf(a->str, 199, "<%s (%d, %d)>", (a->base).__name__, a->x, a->y);
+      return(a->str);
+    }
+  return NULL;
 }
 
 static Object *Point_add(const Object* self, const Object* other)
@@ -58,7 +64,9 @@ static Object *Point_add(const Object* self, const Object* other)
 
   a = (PointClass *)self;
   b = (PointClass *)other;
-  return(new(Point, a->x + b->x, a->y + b->y));
+  if ((a != NULL && !strcmp(a->base.__name__, "Point")) && (b != NULL && !strcmp(b->base.__name__, "Point")))
+    return(new(Point, a->x + b->x, a->y + b->y));
+  return NULL;
 }
 
 static Object *Point_sub(const Object* self, const Object* other)
@@ -68,7 +76,9 @@ static Object *Point_sub(const Object* self, const Object* other)
 
   a = (PointClass *)self;
   b = (PointClass *)other;
-  return(new(Point, a->x - b->x, a->y - b->y));
+  if ((a != NULL && !strcmp(a->base.__name__, "Point")) && (b != NULL && !strcmp(b->base.__name__, "Point")))
+    return(new(Point, a->x - b->x, a->y - b->y));
+  return NULL;
 }
 
 static PointClass _description = {

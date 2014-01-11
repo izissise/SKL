@@ -10,6 +10,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "vertex.h"
 #include "new.h"
 
@@ -25,9 +26,9 @@ static void Vertex_ctor(Object* self, va_list *ap)
   VertexClass *a;
 
   a = (VertexClass *)self;
-  a->x =(int) va_arg(*ap, int);
-  a->y =(int) va_arg(*ap, int);
-  a->z =(int) va_arg(*ap, int);
+  a->x = (int) va_arg(*ap, int);
+  a->y = (int) va_arg(*ap, int);
+  a->z = (int) va_arg(*ap, int);
   a->str = NULL;
 }
 
@@ -44,11 +45,15 @@ static char const *Vertex_str(Object* self)
   VertexClass *a;
 
   a = (VertexClass *)self;
-  if (a->str != NULL)
-    free(a->str);
-  a->str = malloc(200);
-  snprintf(a->str, 199, "<%s (%d, %d, %d)>", a->str, a->x, a->y, a->y);
-  return(a->str);
+  if (a != NULL && (a != NULL && !strcmp(a->base.__name__, "Vertex")))
+    {
+      if (a->str != NULL)
+        free(a->str);
+      a->str = malloc(200);
+      snprintf(a->str, 199, "<%s (%d, %d, %d)>", (a->base).__name__, a->x, a->y, a->y);
+      return(a->str);
+    }
+  return NULL;
 }
 
 static Object *Vertex_add(const Object* self, const Object* other)
@@ -58,7 +63,9 @@ static Object *Vertex_add(const Object* self, const Object* other)
 
   a = (VertexClass *)self;
   b = (VertexClass *)other;
-  return(new(Vertex, a->x + b->x, a->y + b->y, a->z - b->z));
+  if ((a != NULL && !strcmp(a->base.__name__, "Vertex")) && (b != NULL && !strcmp(b->base.__name__, "Vertex")))
+    return(new(Vertex, a->x + b->x, a->y + b->y, a->z - b->z));
+  return NULL;
 }
 
 static Object *Vertex_sub(const Object* self, const Object* other)
@@ -68,12 +75,14 @@ static Object *Vertex_sub(const Object* self, const Object* other)
 
   a = (VertexClass *)self;
   b = (VertexClass *)other;
-  return(new(Vertex, a->x - b->x, a->y - b->y, a->z - b->z));
+  if ((a != NULL && !strcmp(a->base.__name__, "Vertex")) && (b != NULL && !strcmp(b->base.__name__, "Vertex")))
+    return(new(Vertex, a->x - b->x, a->y - b->y, a->z - b->z));
+  return NULL;
 }
 
 static VertexClass _description = {
-    { sizeof(VertexClass), "Vertex", &Vertex_ctor, &Vertex_dtor, &Vertex_str, &Vertex_add, &Vertex_sub },
-    0, 0, 0, NULL
+  { sizeof(VertexClass), "Vertex", &Vertex_ctor, &Vertex_dtor, &Vertex_str, &Vertex_add, &Vertex_sub },
+  0, 0, 0, NULL
 };
 
 Class* Vertex = (Class*) &_description;

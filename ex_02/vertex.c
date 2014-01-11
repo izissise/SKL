@@ -10,6 +10,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "vertex.h"
 
 typedef struct
@@ -24,9 +25,9 @@ static void Vertex_ctor(Object* self, va_list *ap)
   VertexClass *a;
 
   a = (VertexClass *)self;
-  a->x =(int) va_arg(*ap, int);
-  a->y =(int) va_arg(*ap, int);
-  a->z =(int) va_arg(*ap, int);
+  a->x = (int) va_arg(*ap, int);
+  a->y = (int) va_arg(*ap, int);
+  a->z = (int) va_arg(*ap, int);
   a->str = NULL;
 }
 
@@ -35,7 +36,8 @@ static void Vertex_dtor(Object* self)
   VertexClass *a;
 
   a = (VertexClass *) self;
-  free(a->str);
+  if (a != NULL)
+    free(a->str);
 }
 
 static char const *Vertex_str(Object* self)
@@ -43,11 +45,15 @@ static char const *Vertex_str(Object* self)
   VertexClass *a;
 
   a = (VertexClass *)self;
-  if (a->str != NULL)
-    free(a->str);
-  a->str = malloc(200);
-  snprintf(a->str, 199, "<%s (%d, %d, %d)>", a->str, a->x, a->y, a->y);
-  return(a->str);
+  if (a != NULL && !strcmp(a->base.__name__, "Vertex"))
+    {
+      if (a->str != NULL)
+        free(a->str);
+      a->str = malloc(200);
+      snprintf(a->str, 199, "<%s (%d, %d, %d)>", (a->base).__name__, a->x, a->y, a->z);
+      return(a->str);
+    }
+  return NULL;
 }
 
 static VertexClass _description = {
