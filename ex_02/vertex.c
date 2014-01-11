@@ -5,23 +5,26 @@ typedef struct
 {
     Class base;
     int x, y, z;
+    char *str;
 } VertexClass;
 
 static void Vertex_ctor(Object* self)
 {
-    (void) self;
-    printf("Vertex()\n");
+    self->str = NULL;
 }
 
 static void Vertex_dtor(Object* self)
 {
-    (void) self;
-    printf("~Vertex()\n");
+    free(self->str);
 }
 
 char const *Vertex_str(Object* self)
 {
-    return("<Vertex (0, 1, 2)>");
+    if (self->str != NULL)
+        free(str);
+    self->str = malloc(46);
+    snprintf(self->str, 46, "<Vertex (%d, %d, %d)>", self->x, self->y, self->y);
+    return(self->str);
 }
 
 static VertexClass _description = {
