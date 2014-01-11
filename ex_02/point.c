@@ -4,7 +4,7 @@
 typedef struct
 {
     Class base;
-    int x, y, z;
+    int x, y;
 } PointClass;
 
 static void Point_ctor(Object* self)
@@ -21,12 +21,12 @@ static void Point_dtor(Object* self)
 
 char const *Point_str(Object* self)
 {
-    return("<Point (0, 1, 2)>");
+    return("<Point (0, 1)>");
 }
 
 static PointClass _description = {
     { sizeof(PointClass), "Point", &Point_ctor, &Point_dtor, &Point_str },
-    0, 0, 0
+    0, 0
 };
 
 Class* Point = (Class*) &_description;
