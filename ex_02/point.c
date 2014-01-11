@@ -29,7 +29,7 @@ static void Point_dtor(Object* self)
     free(self->str);
 }
 
-char const *Point_str(Object* self)
+static char const *Point_str(Object* self)
 {
     if (self->str != NULL)
         free(str);

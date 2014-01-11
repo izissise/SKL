@@ -29,7 +29,7 @@ static void Vertex_dtor(Object* self)
     free(self->str);
 }
 
-char const *Vertex_str(Object* self)
+static char const *Vertex_str(Object* self)
 {
     if (self->str != NULL)
         free(str);
