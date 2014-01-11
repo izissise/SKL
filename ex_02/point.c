@@ -11,6 +11,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "point.h"
 
 typedef struct
@@ -35,7 +36,8 @@ static void Point_dtor(Object* self)
   PointClass *a;
 
   a = (PointClass *) self;
-  free(a->str);
+  if (a != NULL)
+    free(a->str);
 }
 
 static char const *Point_str(Object* self)
@@ -43,11 +45,15 @@ static char const *Point_str(Object* self)
   PointClass *a;
 
   a = (PointClass *) self;
-  if (a->str != NULL)
-    free(a->str);
-  a->str = malloc(200);
-  snprintf(a->str, 199, "<Point (%d, %d)>", a->x, a->y);
-  return(a->str);
+  if (self != NULL && !strcmp(a->base.__name__, "Point"))
+    {
+      if (a->str != NULL)
+        free(a->str);
+      a->str = malloc(200);
+      snprintf(a->str, 199, "<%s (%d, %d)>", (a->base).__name__, a->x, a->y);
+      return(a->str);
+    }
+  return NULL;
 }
 
 static PointClass _description = {
