@@ -5,7 +5,7 @@
 ** Login   <lavand_m@epitech.net>
 **
 ** Started on  Sat Jan 11 10:57:39 2014 Maxime
-** Last update Sat Jan 11 11:55:37 2014 Maxime
+** Last update Sat Jan 11 15:43:59 2014 Maxime
 */
 
 #include <stdlib.h>
@@ -45,8 +45,8 @@ static char const *Vertex_str(Object* self)
   a = (VertexClass *)self;
   if (a->str != NULL)
     free(a->str);
-  a->str = malloc(46);
-  snprintf(a->str, 46, "<Vertex (%d, %d, %d)>", a->x, a->y, a->y);
+  a->str = malloc(200);
+  snprintf(a->str, 199, "<Vertex (%d, %d, %d)>", a->x, a->y, a->y);
   return(a->str);
 }
 

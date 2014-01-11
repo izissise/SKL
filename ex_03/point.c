@@ -5,7 +5,7 @@
 ** Login   <lavand_m@epitech.net>
 **
 ** Started on  Sat Jan 11 10:57:16 2014 Maxime
-** Last update Sat Jan 11 12:00:17 2014 Maxime
+** Last update Sat Jan 11 15:45:01 2014 Maxime
 */
 
 #include <stdarg.h>
@@ -46,8 +46,8 @@ static char const *Point_str(Object* self)
   a = (PointClass *) self;
   if (a->str != NULL)
     free(a->str);
-  a->str = malloc(33);
-  snprintf(a->str, 33, "<Point (%d, %d)>", a->x, a->y);
+  a->str = malloc(200);
+  snprintf(a->str, 199, "<Point (%d, %d)>", a->x, a->y);
   return(a->str);
 }
 
