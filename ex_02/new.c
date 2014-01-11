@@ -5,7 +5,7 @@
 ** Login   <debas_e@epitech.net>
 **
 ** Started on  Sat Jan 11 09:28:41 2014 Etienne
-** Last update Sat Jan 11 11:30:39 2014 jonathan.collinet
+** Last update Sat Jan 11 11:41:45 2014 Maxime
 */
 
 #include <stdlib.h>
@@ -14,7 +14,7 @@
 
 #include "object.h"
 #include "raise.h"
-#include "point.h" 
+#include "point.h"
 
 Object		*va_new(Class *object, va_list *ap)
 {
@@ -24,7 +24,7 @@ Object		*va_new(Class *object, va_list *ap)
     raise("Out of memory");
   memcpy(ret, object, object->__size__);
   if (((Class*)ret)->__init__ != NULL)
-    (Class*)ret->__init__(ret, ap);
+    ((Class*)ret)->__init__(ret, ap);
   return (ret);
 }
 
@@ -39,7 +39,7 @@ Object		*new(Class *object, ...)
       va_start(ap, object);
       ret = va_new(object, &ap);
       va_end(ap);
-      return (ret); 
+      return (ret);
     }
   return (NULL);
 }
