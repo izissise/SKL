@@ -5,7 +5,7 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Sat Jan 11 14:39:00 2014 Maxime
+** Last update Sat Jan 11 14:56:29 2014 Maxime
 */
 
 #include <stdarg.h>
@@ -20,16 +20,33 @@
 typedef struct
 {
   Class base;
+  float x;
+  char *str;
+} FloatClass;
+
+typedef struct
+{
+  Class base;
   char x;
   char *str;
 } CharClass;
+
+typedef struct
+{
+  Class base;
+  int x;
+  char *str;
+} IntClass;
+
+struct FloatClass;
+struct IntClass;
 
 static void Char_ctor(Object* self, va_list *ap)
 {
   CharClass *a;
 
   a = (CharClass *) self;
-  a->x = (char)va_arg(*ap, char);
+  a->x = (char)va_arg(*ap, int);
   a->str = NULL;
 }
 
@@ -187,19 +204,19 @@ static bool Char_eq(const Object* self, const Object* other)
     {
       a = (CharClass *)self;
       c = (FloatClass *)other;
-      return (a->x == c->x ? true, false);
+      return (a->x == c->x ? true : false);
     }
   if (strcmp(e->__name__, "Int") == 0)
     {
       a = (CharClass *)self;
       d = (IntClass *)other;
-      return (a->x == (int)d->x ? true, false);
+      return (a->x == (int)d->x ? true : false);
     }
   if (strcmp(e->__name__, "Char") == 0)
     {
       a = (CharClass *)self;
       b = (CharClass *)other;
-      return(a->x == b->x ? true, false);
+      return(a->x == b->x ? true : false);
     }
   return (false);
 }
@@ -218,19 +235,19 @@ static bool Char_gt(const Object* self, const Object* other)
     {
       a = (CharClass *)self;
       c = (FloatClass *)other;
-      return (a->x > c->x ? true, false);
+      return (a->x > c->x ? true : false);
     }
   if (strcmp(e->__name__, "Int") == 0)
     {
       a = (CharClass *)self;
       d = (IntClass *)other;
-      return (a->x > (int)d->x ? true, false);
+      return (a->x > (int)d->x ? true : false);
     }
   if (strcmp(e->__name__, "Char") == 0)
     {
       a = (CharClass *)self;
       b = (CharClass *)other;
-      return(a->x > b->x ? true, false);
+      return(a->x > b->x ? true : false);
     }
   return (false);
 }
@@ -249,19 +266,19 @@ static bool Char_lt(const Object* self, const Object* other)
     {
       a = (CharClass *)self;
       c = (FloatClass *)other;
-      return (a->x < (char)c->x ? true, false);
+      return (a->x < (char)c->x ? true : false);
     }
   if (strcmp(e->__name__, "Int") == 0)
     {
       a = (CharClass *)self;
       d = (IntClass *)other;
-      return (a->x < (char)d->x ? true, false);
+      return (a->x < (char)d->x ? true : false);
     }
   if (strcmp(e->__name__, "Char") == 0)
     {
       a = (CharClass *)self;
       b = (CharClass *)other;
-      return(a->x < b->x ? true, false);
+      return(a->x < b->x ? true : false);
     }
   return (false);
 }
