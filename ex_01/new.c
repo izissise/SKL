@@ -5,17 +5,21 @@
 ** Login   <debas_e@epitech.net>
 ** 
 ** Started on  Sat Jan 11 09:28:41 2014 Etienne
-** Last update Sat Jan 11 09:50:25 2014 Etienne
+** Last update Sat Jan 11 09:56:51 2014 Etienne
 */
 
 #include "object.h"
 #include <stdlib.h>
 
-Object		*new(Class *object) {
-  Object	*ret = NULL;
+Object		*new(Class *object)
+{
+  Object	*ret;
 
-  ret = malloc(object->__size__);
+  ret = NULL;
+  if ((ret = malloc(object->__size__)) == NULL)
+    raise ("Out of memory");
   memcpy(ret, object, object->__size__);
-  ret->base->__init__(ret);
+  if (ret->base->__init__ != NULL)
+    ret->base->__init__(ret);
   return (ret);
 }
