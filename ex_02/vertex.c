@@ -5,12 +5,12 @@
 ** Login   <lavand_m@epitech.net>
 **
 ** Started on  Sat Jan 11 10:57:39 2014 Maxime
-** Last update Sat Jan 11 11:39:27 2014 Maxime
+** Last update Sat Jan 11 11:55:37 2014 Maxime
 */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "point.h"
+#include "vertex.h"
 
 typedef struct
 {
