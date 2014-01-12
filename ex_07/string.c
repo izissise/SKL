@@ -5,7 +5,7 @@
 ** Login   <debas_e@epitech.net>
 **
 ** Started on  Sat Jan 11 19:08:38 2014 Etienne
-** Last update Sun Jan 12 00:04:13 2014 Etienne
+** Last update Sun Jan 12 01:18:45 2014 Etienne
 */
 
 
@@ -26,9 +26,14 @@ typedef struct
 static void String_ctor(Object* self, va_list *ap)
 {
   StringClass *a;
+  char	      *str;
 
+  str = va_arg(*ap, char *);
   a = (StringClass *) self;
-  a->s = strdup(va_arg(*ap, char *));
+  if (str)
+    a->s = strdup(str);
+  else
+    a->s = NULL;
   a->str = NULL;
 }
 
@@ -49,7 +54,7 @@ static char const *String_str(Object* self)
   StringClass *a;
 
   a = (StringClass *) self;
-  if (a != NULL && !strcmp(a->base.__name__, "String"))
+  if (a != NULL && a->s && !strcmp(a->base.__name__, "String"))
     {
       if (a->str != NULL)
         free(a->str);
@@ -76,7 +81,11 @@ static Object *String_append_s(const Object* self, const Object *other)
   a = (StringClass *)self;
   b = (StringClass *)other;
   len = 0;
-  if ((a != NULL && !strcmp(a->base.__name__, "String")) && (b != NULL && !strcmp(b->base.__name__, "String")))
+  if (!a && !b)
+    return (NULL);
+  if (!a->s && !b->s && !strcmp(a->base.__name__, "String") && !strcmp(b->base.__name__, "String"))
+    return (new(String, NULL));
+ if (!strcmp(a->base.__name__, "String") && !strcmp(b->base.__name__, "String"))
     {
       if (b->s)
 	{
@@ -87,7 +96,7 @@ static Object *String_append_s(const Object* self, const Object *other)
 	    new_str = realloc(new_str, (sizeof(char) * len) + 1);
 	    strcat(new_str, b->s);
 	    ret = new(String, new_str);
-	    	    free(new_str);
+	    free(new_str);
 	    return(ret);
 	  }
 	  return (new(String, b->s));
